@@ -1,0 +1,32 @@
+---
+import astroLogo from '../assets/astro.svg';
+import background from '../assets/background.svg';
+import { getCollection } from "astro:content";
+
+const blogPosts = await getCollection("blogs");
+---
+
+<div class="h-full font-sans">
+	<img class="fixed top-0 left-0 w-full h-full -z-10 blur-[100px]" src={background.src} alt="" fetchpriority="high" />
+	<main class="h-full flex justify-center">
+		<section class="flex flex-col items-start justify-center gap-1 p-4">
+			<a href="https://astro.build">
+				<img src={astroLogo.src} width="115" height="48" alt="Astro Homepage" />
+			</a>
+			<h1 class="text-[22px] mt-1">
+
+				<code class="inline-block bg-gradient-to-r from-[#f3cddd] to-[#f5cee7] rounded-lg border border-transparent p-[6px_8px]">
+					<pre class="font-mono font-bold bg-gradient-to-r from-[#d83333] to-[#f041ff] bg-clip-text text-transparent m-0 font-">Welcome to React Pune!!</pre>
+				</code> 
+
+			</h1>
+			<section class="flex gap-4">
+		
+			</section>
+		</section>
+	</main>
+
+
+</div>
+
+<!-- Removed all custom CSS styles as they're replaced by Tailwind classes -->
