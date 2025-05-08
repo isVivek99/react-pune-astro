@@ -1,0 +1,56 @@
+---
+// This component encapsulates server-rendered data
+
+// This will only run on the server
+const randomNumber = Math.random();
+const serverDate = new Date().toLocaleString();
+const userAgent = Astro.request.headers.get('user-agent');
+
+// Simulate a database call or API request
+async function fetchUserData() {
+  // In a real app, this would be an actual API or database call
+  // Adding an artificial delay to demonstrate deferred loading
+  await new Promise(resolve => setTimeout(resolve, 3500));
+  
+  return {
+    name: 'Test User',
+    role: 'Developer',
+    lastLogin: new Date().toISOString(),
+    preferences: {
+      theme: 'dark',
+      notifications: true
+    }
+  };
+}
+
+const userData = await fetchUserData();
+---
+
+<div class="bg-gray-100 p-6 rounded-lg shadow-md">
+  <h2 class="text-2xl font-bold mb-4">Server-Rendered Data</h2>
+  <p class="mb-2">This content was generated on the server and doesn't change after page load.</p>
+  
+  <div class="mt-6 space-y-4">
+    <div class="bg-white p-4 rounded">
+      <h3 class="font-semibold">Random Number:</h3>
+      <p>{randomNumber}</p>
+    </div>
+    
+    <div class="bg-white p-4 rounded">
+      <h3 class="font-semibold">Server Time:</h3>
+      <p>{serverDate}</p>
+    </div>
+    
+    <div class="bg-white p-4 rounded">
+      <h3 class="font-semibold">Your User Agent:</h3>
+      <p class="break-words">{userAgent}</p>
+    </div>
+    
+    <div class="bg-white p-4 rounded">
+      <h3 class="font-semibold">User Data (from "database"):</h3>
+      <pre class="overflow-auto text-sm">
+        {JSON.stringify(userData, null, 2)}
+      </pre>
+    </div>
+  </div>
+</div>

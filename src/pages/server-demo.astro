@@ -1,0 +1,84 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// By setting prerender to false, this page will be rendered on-demand
+export const prerender = false;
+
+// Simulate fetching some dynamic data
+const serverTime = new Date().toLocaleString();
+const randomValue = Math.random().toFixed(4);
+
+// You could also fetch data from an API or database here
+const userData = {
+  visits: Math.floor(Math.random() * 100),
+  lastVisit: new Date().toLocaleDateString()
+};
+
+// Set a cookie to demonstrate server capabilities
+Astro.cookies.set('visited', 'true', {
+  path: '/',
+  maxAge: 60 * 60 * 24 * 7 // 1 week
+});
+
+// Check if the user has visited before
+const hasVisitedBefore = Astro.cookies.has('visited');
+---
+
+<Layout>
+  <div class="bg-gray-100 min-h-screen">
+    <div class="max-w-4xl mx-auto p-6">
+      <header class="bg-white shadow-md rounded-lg p-6 mb-6">
+        <h1 class="text-3xl font-bold text-gray-800">Server Rendered Page</h1>
+        <p class="text-gray-600">This page is rendered on-demand when you visit it.</p>
+      </header>
+
+      <div class="bg-white shadow-md rounded-lg p-6 mb-6">
+        <h2 class="text-xl font-semibold mb-4 text-gray-700">Server Information</h2>
+        <div class="space-y-2">
+          <div class="flex justify-between p-2 bg-gray-50 rounded">
+            <span class="font-medium">Server Time:</span>
+            <span>{serverTime}</span>
+          </div>
+          <div class="flex justify-between p-2 bg-gray-50 rounded">
+            <span class="font-medium">Random Value:</span>
+            <span>{randomValue}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white shadow-md rounded-lg p-6 mb-6">
+        <h2 class="text-xl font-semibold mb-4 text-gray-700">Cookie Information</h2>
+        <div class="p-4 bg-gray-50 rounded">
+          {hasVisitedBefore ? (
+            <p class="text-green-600">Welcome back! You've visited this page before.</p>
+          ) : (
+            <p class="text-blue-600">This appears to be your first visit to this page.</p>
+          )}
+        </div>
+      </div>
+
+      <div class="bg-white shadow-md rounded-lg p-6 mb-6">
+        <h2 class="text-xl font-semibold mb-4 text-gray-700">User Data</h2>
+        <div class="space-y-2">
+          <div class="flex justify-between p-2 bg-gray-50 rounded">
+            <span class="font-medium">Visit Count:</span>
+            <span>{userData.visits}</span>
+          </div>
+          <div class="flex justify-between p-2 bg-gray-50 rounded">
+            <span class="font-medium">Last Visit:</span>
+            <span>{userData.lastVisit}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-center mt-8">
+        <a href="/" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+          Back to Home
+        </a>
+        <button onclick="window.location.reload()" class="ml-4 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+          Reload Page
+        </button>
+      </div>
+    </div>
+  </div>
+</Layout>

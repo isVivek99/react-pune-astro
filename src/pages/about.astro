@@ -1,0 +1,50 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// Simulate fetching some dynamic data
+export const prerender = false
+const serverTime = new Date().toLocaleString();
+const randomValue = Math.random().toFixed(4);
+
+// You could also fetch data from an API or database here
+const userData = {
+  visits: Math.floor(Math.random() * 100),
+  lastVisit: new Date().toLocaleDateString()
+};
+---
+
+<Layout>
+  <div class="max-w-4xl mx-auto p-6">
+    <header class="bg-white shadow-md rounded-lg p-6 mb-6">
+      <h1 class="text-3xl font-bold text-gray-800">About Us</h1>
+      <p class="text-gray-600">This is a statically generated page that provides information about our project.</p>
+    </header>
+
+    <section class="bg-white shadow-md rounded-lg p-6">
+      <h2 class="text-xl font-semibold mb-4 text-gray-700">Our Mission</h2>
+      <p class="text-gray-600">
+        We aim to create high-quality, performant, and user-friendly web applications using modern tools like Astro and Tailwind CSS.
+      </p>
+    </section>
+    <div class="bg-white shadow-md rounded-lg p-6 mb-6">
+        <h2 class="text-xl font-semibold mb-4 text-gray-700">Server Information</h2>
+        <div class="space-y-2">
+          <div class="flex justify-between p-2 bg-gray-50 rounded">
+            <span class="font-medium">Server Time:</span>
+            <span>{serverTime}</span>
+          </div>
+          <div class="flex justify-between p-2 bg-gray-50 rounded">
+            <span class="font-medium">Random Value:</span>
+            <span>{randomValue}</span>
+          </div>
+        </div>
+      </div>
+
+    <section class="bg-white shadow-md rounded-lg p-6 mt-6">
+      <h2 class="text-xl font-semibold mb-4 text-gray-700">Contact Us</h2>
+      <p class="text-gray-600">
+        Feel free to reach out to us at <a href="mailto:contact@eccentric-event.com" class="text-blue-600 hover:underline">contact@eccentric-event.com</a>.
+      </p>
+    </section>
+  </div>
+</Layout>

@@ -1,0 +1,69 @@
+---
+// This component demonstrates server-side data fetching in Astro
+// It will run every time the component is rendered on the server
+
+// Fetch a random user from the randomuser.me API
+async function fetchRandomUser() {
+  try {
+    const response = await fetch('https://randomuser.me/api/');
+    const data = await response.json();
+    return data.results[0];
+  } catch (error) {
+    console.error('Error fetching random user:', error);
+    return null;
+  }
+}
+
+// Server-side API call
+const user = await fetchRandomUser();
+
+// Format the data for display
+const userData = user ? {
+  name: `${user.name.first} ${user.name.last}`,
+  email: user.email,
+  location: `${user.location.city}, ${user.location.country}`,
+  picture: user.picture.large,
+  registered: new Date(user.registered.date).toLocaleDateString(),
+} : null;
+---
+
+<div class="server-component bg-violet-100 p-6 rounded-lg shadow-md">
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="text-2xl font-bold text-violet-800">Server-Fetched Random User</h2>
+    <span class="bg-violet-200 text-violet-800 px-3 py-1 rounded-full text-sm">
+      Server Component
+    </span>
+  </div>
+
+  {userData ? (
+    <div class="flex flex-col items-center">
+      <img 
+        src={userData.picture} 
+        alt={userData.name} 
+        class="w-32 h-32 rounded-full border-4 border-white shadow-lg mb-4"
+      />
+      <div class="space-y-2 text-center">
+        <h3 class="text-xl font-bold">{userData.name}</h3>
+        <p class="text-gray-600">{userData.email}</p>
+        <p class="text-gray-600">{userData.location}</p>
+        <p class="text-sm text-gray-500">Member since: {userData.registered}</p>
+      </div>
+      <p class="mt-6 text-sm text-gray-500">
+        This user data was fetched on the server at {new Date().toLocaleTimeString()}
+      </p>
+    </div>
+  ) : (
+    <div class="bg-red-100 text-red-700 p-4 rounded-lg">
+      Failed to load user data. Please try refreshing.
+    </div>
+  )}
+
+  <div class="mt-6 bg-violet-50 p-4 rounded border border-violet-200">
+    <h3 class="font-semibold text-violet-800 mb-2">How this works:</h3>
+    <p class="text-sm text-violet-700">
+      This component fetches data from the randomuser.me API during server-side rendering.
+      The API call happens entirely on the server and is re-executed on each page load.
+      No client-side JavaScript is needed for the data fetching.
+    </p>
+  </div>
+</div>
