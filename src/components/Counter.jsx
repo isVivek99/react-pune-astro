@@ -18,7 +18,7 @@ const Counter = () => {
   return (
     <div className="flex flex-col items-center justify-center p-6 bg-white rounded-lg border border-gray-100 shadow-sm max-w-md mx-auto my-8">
       <h2 className="text-xl font-medium tracking-tight mb-6 text-gray-900">
-        Counter
+        Counter {Math.floor(Math.random() * 100)}
       </h2>
       <div className="w-full p-4 mb-6 bg-gray-50 rounded-md border border-gray-100">
         <p className="text-center text-3xl font-medium text-gray-900">
